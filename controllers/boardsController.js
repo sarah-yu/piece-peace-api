@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
-	Board.findByIdAndUpdate(req.params.id, req.body.board)
+	Board.findByIdAndUpdate(req.params.id, req.body)
 		.then(board => res.json(board))
 		.catch(err => console.log(err))
 })
