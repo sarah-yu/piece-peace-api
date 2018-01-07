@@ -25,6 +25,18 @@ const photography = new Board({
 	images: images
 })
 
+Image.remove({})
+	.catch(err => console.log(err))
+	.then(() => {
+		console.log('images removed successfully')
+
+		images.forEach(image => {
+			image.save((err, image) => {
+				err ? console.log('error creating image') : console.log(image)
+			})
+		})
+	})
+
 Board.remove({})
 	.catch(err => console.log(err))
 	.then(() => {

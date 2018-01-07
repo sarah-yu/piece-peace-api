@@ -11,4 +11,16 @@ router.get('/', (req, res) => {
 		.catch(err => console.log(err))
 })
 
+router.get('/:id', (req, res) => {
+	Image.findById(req.params.id)
+		.then(image => res.json(image))
+		.catch(err => console.log(err))
+})
+
+router.delete('/:id', (req, res) => {
+	Image.findByIdAndRemove(req.params.id)
+		.then(image => res.json(image))
+		.catch(err => console.log(err))
+})
+
 module.exports = router

@@ -18,13 +18,13 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-	Board.create(req.body)
+	Board.create(req.body.board)
 		.then(board => res.json(board))
 		.catch(err => console.log(err))
 })
 
 router.put('/:id', (req, res) => {
-	Board.findByIdAndUpdate(req.params.id, req.body)
+	Board.findByIdAndUpdate(req.params.id, req.body.board)
 		.then(board => res.json(board))
 		.catch(err => console.log(err))
 })
