@@ -18,12 +18,27 @@ const image_2 = new Image({
 	description: 'Men in the Cities - Robert Longo'
 })
 
-const images = [image_1, image_2]
+const image_3 = new Image({
+	src: 'https://s3.amazonaws.com/piece-peace/rinko-kawauchi-ametsuchi.jpg',
+	origin:
+		'https://theredlist.com/wiki-2-16-860-897-1112-view-poetic-realism-1-profile-kawauchi-rinko.html',
+	description: 'Untitled, from series Ametsuchi - Rinko Kawauchi'
+})
+
+const photography_images = [image_1, image_2]
+const images = [image_1, image_2, image_3]
 
 const photography = new Board({
 	name: 'photography',
-	images: images
+	images: photography_images
 })
+
+const landscape = new Board({
+	name: 'landscape',
+	images: image_3
+})
+
+const boards = [photography, landscape]
 
 Image.remove({})
 	.catch(err => console.log(err))
@@ -42,7 +57,9 @@ Board.remove({})
 	.then(() => {
 		console.log('boards removed successfully')
 
-		photography.save((err, board) => {
-			err ? console.log('error creating board') : console.log(board)
+		boards.forEach(board => {
+			board.save((err, board) => {
+				err ? console.log('error creating board') : console.log(board)
+			})
 		})
 	})

@@ -24,6 +24,7 @@ router.post('/', (req, res) => {
 		.catch(err => console.log(err))
 })
 
+// put route for boards
 router.put('/:id', (req, res) => {
 	Board.findByIdAndUpdate(req.params.id, req.body)
 		.then(board => res.json(board))
@@ -37,6 +38,31 @@ router.delete('/:id', (req, res) => {
 		.catch(err => console.log(err))
 })
 
+///// routes for board images /////
+
+// get route for board image by id
+router.get('/:board_id/images/:image_id', (req, res) => {
+	Board.findById(req.params.board_id)
+		.then(board => {
+			let image = board.images.id(req.params.image_id)
+			res.json(image)
+		})
+		.catch(err => console.log(err))
+})
+
+// post route for board images
+router.post('/:id', (req, res) => {
+	Board.findById(req.params.id)
+		.then(board => {
+			board.images.push(req.body)
+			board
+				.save()
+				.then(board => res.json(board))
+				.catch(err => console.log(err))
+		})
+		.catch(err => console.log(err))
+})
+
 // delete route for board images
 router.delete('/:board_id/images/:image_id', (req, res) => {
 	Board.findById(req.params.board_id)
@@ -44,7 +70,25 @@ router.delete('/:board_id/images/:image_id', (req, res) => {
 			let imageIndex = board.images.findIndex(image => {
 				return image._id == req.params.image_id
 			})
+
 			board.images.splice(imageIndex, 1)
+
+			board
+				.save()
+				.then(board => res.json(board))
+				.catch(err => console.log(err))
+		})
+		.catch(err => console.log(err))
+})
+
+// put route for board images
+router.put('/:board_id/images/:image_id', (req, res) => {
+	Board.findById(req.params.board_id)
+		.then(board => {
+			let image = board.images.id(req.params.image_id)
+
+			image.set(req.body)
+
 			board
 				.save()
 				.then(board => res.json(board))
