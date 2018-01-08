@@ -17,11 +17,4 @@ router.get('/:id', (req, res) => {
 		.catch(err => console.log(err))
 })
 
-// this deletes the image but not from any boards it is on
-// router.delete('/:id', (req, res) => {
-// 	Image.findByIdAndRemove(req.params.id)
-// 		.then(image => res.json(image))
-// 		.catch(err => console.log(err))
-// })
-
 module.exports = router
