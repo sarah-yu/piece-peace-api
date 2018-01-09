@@ -47,88 +47,58 @@ app.post('/receive-images', (req, res) => {
 	res.redirect('http://localhost:3000/receive-images')
 })
 
-app.post('/api/sign-in', function(req, res) {
-	if (req.body.email && req.body.password) {
-		User.findOne({ email: req.body.email })
-			.then(user => {
-				if (user) {
-					// user was found
-					console.log(user)
-					bcrypt.compare(req.body.password, user.password, (err, response) => {
-						if (response) {
-							// correct password
-							let payload = {
-								id: user.id
-							}
-							let token = jwt.encode(payload, cfg.jwtSecret)
-							res.json({ token: token })
-						} else {
-							// incorrect password
-							console.log('incorrect password')
-							res.sendStatus(500)
-						}
-					})
-				} else {
-					console.log('user does not exist')
-					res.sendStatus(500)
-				}
-			})
-			.catch(err => console.log(err))
-	} else {
-		// user did not input both email and password
-		res.sendStatus(401)
-	}
-
+app.post('/api/login', function(req, res) {
 	if (req.body.email && req.body.password) {
 		User.findOne({ email: req.body.email }).then(user => {
 			if (user) {
-				bcrypt.compare(req.body.password, user.password, function(
-					err,
-					response
-				) {
+				// user was found
+				bcrypt.compare(req.body.password, user.password, (err, response) => {
 					if (response) {
-						var payload = { id: user.id }
-						var token = jwt.encode(payload, cfg.jwtSecret)
+						// correct password
+						let payload = {
+							id: user.id
+						}
+						let token = jwt.encode(payload, cfg.jwtSecret)
 						res.json({ token: token })
 					} else {
+						// incorrect password
+						console.log('incorrect password')
 						res.sendStatus(500)
 					}
 				})
 			} else {
+				console.log('user does not exist')
 				res.sendStatus(500)
 			}
 		})
 	} else {
+		// user did not input both email and password
 		res.sendStatus(401)
 	}
 })
 
-app.post('/api/sign-up', function(req, res) {
+app.post('/api/register', function(req, res) {
 	if (req.body.email && req.body.password) {
-		User.findOne({ email: req.body.email })
-			.then(user => {
-				if (user) {
-					// user already exists
-					res.sendStatus(500)
-					console.log('user already exists')
-				} else {
-					// create a new user
-					bcrypt.hash(req.body.password, 8, (err, hash) => {
-						User.create({ email: req.body.email, password: hash })
-							.then(user => {
-								if (user) {
-									let payload = { id: user.id }
-									let token = jwt.encode(payload, cfg.jwtSecret)
-									res.json({ token: token })
-								} else {
-									res.sendStatus(401)
-								}
-							})
-							.catch(err => console.log(err))
+		User.findOne({ email: req.body.email }).then(user => {
+			if (user) {
+				// user already exists
+				console.log('user already exists')
+				res.sendStatus(500)
+			} else {
+				// create a new user
+				bcrypt.hash(req.body.password, 8, (err, hash) => {
+					User.create({ email: req.body.email, password: hash }).then(user => {
+						if (user) {
+							let payload = { id: user.id }
+							let token = jwt.encode(payload, cfg.jwtSecret)
+							res.json({ token: token })
+						} else {
+							res.sendStatus(401)
+						}
 					})
-				}
-			})
-			.catch(err => console.log(err))
+				})
+			}
+		})
 	} else {
 		res.sendStatus(401)
 	}
