@@ -2,10 +2,10 @@ const Schema = require('./schema')
 
 const Image = Schema.Image
 const Board = Schema.Board
+const User = Schema.User
 
 const image_1 = new Image({
-	src:
-		'https://www.itsnicethat.com/system/files/012017/586d34827fa44cea7f007d60/images_slice_large/Can_Dagarslani12.jpg',
+	src: 'https://s3.amazonaws.com/piece-peace/serenity-can-dagarslani.jpg',
 	origin:
 		'https://www.itsnicethat.com/articles/can-dagarslani-photography-050117',
 	description: 'Serenity - Can Dagarslani'
@@ -13,7 +13,7 @@ const image_1 = new Image({
 
 const image_2 = new Image({
 	src:
-		'https://78.media.tumblr.com/45dcff7b03123861ed7a9e6355f1e7ef/tumblr_n2aksa3woh1s00n8bo1_1280.jpg',
+		'https://s3.amazonaws.com/piece-peace/robert-longo-men-in-the-cities.jpg',
 	origin: '',
 	description: 'Men in the Cities - Robert Longo'
 })
@@ -25,8 +25,16 @@ const image_3 = new Image({
 	description: 'Untitled, from series Ametsuchi - Rinko Kawauchi'
 })
 
+const image_4 = new Image({
+	src: 'https://s3.amazonaws.com/piece-peace/Love_of_This_Land-7-of-18.jpg',
+	origin:
+		'https://www.booooooom.com/2017/12/27/photographer-spotlight-alexis-hagestad/',
+	description: 'Love of This Land - Alexis Hagestad'
+})
+
 const photography_images = [image_1, image_2]
-const images = [image_1, image_2, image_3]
+const landscape_images = [image_3, image_4]
+const images = [image_1, image_2, image_3, image_4]
 
 const photography = new Board({
 	name: 'photography',
@@ -35,10 +43,24 @@ const photography = new Board({
 
 const landscape = new Board({
 	name: 'landscape',
-	images: image_3
+	images: landscape_images
 })
 
 const boards = [photography, landscape]
+
+const user_1 = new User({
+	email: 'user1@gmail.com',
+	password: 'password',
+	boards: photography
+})
+
+const user_2 = new User({
+	email: 'user2@gmail.com',
+	password: 'password',
+	boards: landscape
+})
+
+const users = [user_1, user_2]
 
 Image.remove({})
 	.catch(err => console.log(err))
@@ -60,6 +82,18 @@ Board.remove({})
 		boards.forEach(board => {
 			board.save((err, board) => {
 				err ? console.log('error creating board') : console.log(board)
+			})
+		})
+	})
+
+User.remove({})
+	.catch(err => console.log(err))
+	.then(() => {
+		console.log('users removed successfully')
+
+		users.forEach(user => {
+			user.save((err, user) => {
+				err ? console.log('error creating user') : console.log(user)
 			})
 		})
 	})

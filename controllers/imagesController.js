@@ -7,6 +7,7 @@ const Image = Schema.Image
 
 router.get('/', (req, res) => {
 	Image.find()
+		.sort({ date: -1 })
 		.then(images => res.json(images))
 		.catch(err => console.log(err))
 })
