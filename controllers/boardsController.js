@@ -23,7 +23,6 @@ router.get('/:id', (req, res) => {
 
 // createBoard
 router.post('/', (req, res) => {
-	console.log(req.body)
 	Board.create(req.body)
 		.then(board => {
 			res.json(board)
@@ -34,7 +33,10 @@ router.post('/', (req, res) => {
 // updateBoard
 router.put('/:id', (req, res) => {
 	Board.findByIdAndUpdate(req.params.id, req.body)
-		.then(board => res.json(board))
+		.then(board => {
+			res.json(board)
+			console.log(board)
+		})
 		.catch(err => console.log(err))
 })
 
@@ -57,12 +59,17 @@ router.get('/:board_id/images/:image_id', (req, res) => {
 
 // pinImageToBoard
 router.post('/:id', (req, res) => {
+	console.log(req.body)
+
 	Board.findById(req.params.id)
 		.then(board => {
 			board.images.push(req.body)
 			board
 				.save()
-				.then(board => res.json(board))
+				.then(board => {
+					console.log(board)
+					res.json(board)
+				})
 				.catch(err => console.log(err))
 		})
 		.catch(err => console.log(err))
