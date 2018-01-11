@@ -5,6 +5,7 @@ const router = express.Router()
 
 const Image = Schema.Image
 
+// getImages
 router.get('/', (req, res) => {
 	Image.find()
 		.sort({ date: -1 })
@@ -12,7 +13,7 @@ router.get('/', (req, res) => {
 		.catch(err => console.log(err))
 })
 
-// get route for an original image, not altered version from any board
+// getImage
 router.get('/:id', (req, res) => {
 	Image.findById(req.params.id)
 		.then(image => res.json(image))

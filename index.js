@@ -31,25 +31,9 @@ app.get('/api/users', (req, res) => {
 		.catch(err => console.log(err))
 })
 
-app.post('/receive-images', (req, res) => {
-	let urls = req.body.src.split('|')
-
-	let myHTML = '<html><head><title>Photos</title></head><body>'
-	for (let i = 0; i < urls.length; i++) {
-		myHTML += `<img src='${urls[i]}' />`
-	}
-	myHTML += '</body></html>'
-
-	// request object has info on who sent the request
-	// send response back to whoever sent the request
-
-	// res.send(myHTML)
-	res.redirect('http://localhost:3000/receive-images')
-})
-
 app.post('/api/login', function(req, res) {
-	if (req.body.email && req.body.password) {
-		User.findOne({ email: req.body.email }).then(user => {
+	if (req.body.username && req.body.password) {
+		User.findOne({ username: req.body.username }).then(user => {
 			if (user) {
 				// user was found
 				bcrypt.compare(req.body.password, user.password, (err, response) => {
@@ -72,33 +56,40 @@ app.post('/api/login', function(req, res) {
 			}
 		})
 	} else {
-		// user did not input both email and password
+		// user did not input both username and password
 		res.sendStatus(401)
 	}
 })
 
 app.post('/api/register', function(req, res) {
-	if (req.body.email && req.body.password) {
-		User.findOne({ email: req.body.email }).then(user => {
-			if (user) {
-				// user already exists
-				console.log('user already exists')
-				res.sendStatus(500)
-			} else {
-				// create a new user
-				bcrypt.hash(req.body.password, 8, (err, hash) => {
-					User.create({ email: req.body.email, password: hash }).then(user => {
-						if (user) {
-							let payload = { id: user.id }
-							let token = jwt.encode(payload, cfg.jwtSecret)
-							res.json({ token: token })
-						} else {
-							res.sendStatus(401)
-						}
+	if (req.body.username && req.body.password) {
+		User.findOne({ username: req.body.username })
+			.then(user => {
+				if (user) {
+					// user already exists
+					console.log('user already exists')
+					res.sendStatus(500)
+				} else {
+					// create a new user
+					bcrypt.hash(req.body.password, 8, (err, hash) => {
+						User.create({
+							username: req.body.username,
+							password: hash
+						})
+							.then(user => {
+								if (user) {
+									let payload = { id: user.id }
+									let token = jwt.encode(payload, cfg.jwtSecret)
+									res.json({ token: token })
+								} else {
+									res.sendStatus(401)
+								}
+							})
+							.catch(err => console.log(err))
 					})
-				})
-			}
-		})
+				}
+			})
+			.catch(err => console.log(err))
 	} else {
 		res.sendStatus(401)
 	}

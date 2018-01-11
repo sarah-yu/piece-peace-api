@@ -13,7 +13,6 @@ const User = Schema.User
 
 module.exports = function() {
 	let strategy = new Strategy(params, function(payload, done) {
-		// authentication to find user from db
 		let user = User.findById(payload.id) || null
 		if (user) {
 			return done(null, {

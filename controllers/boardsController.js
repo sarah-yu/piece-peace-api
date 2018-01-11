@@ -6,6 +6,7 @@ const router = express.Router()
 const Board = Schema.Board
 const Image = Schema.Image
 
+// getBoards
 router.get('/', (req, res) => {
 	Board.find()
 		.sort({ date: -1 })
@@ -13,35 +14,38 @@ router.get('/', (req, res) => {
 		.catch(err => console.log(err))
 })
 
+// getBoard
 router.get('/:id', (req, res) => {
 	Board.findById(req.params.id)
 		.then(board => res.json(board))
 		.catch(err => console.log(err))
 })
 
+// createBoard
 router.post('/', (req, res) => {
-	Board.create(req.body.board)
-		.then(board => res.json(board))
+	console.log(req.body)
+	Board.create(req.body)
+		.then(board => {
+			res.json(board)
+		})
 		.catch(err => console.log(err))
 })
 
-// put route for boards
+// updateBoard
 router.put('/:id', (req, res) => {
 	Board.findByIdAndUpdate(req.params.id, req.body)
 		.then(board => res.json(board))
 		.catch(err => console.log(err))
 })
 
-// delete route for boards
+// deleteBoard
 router.delete('/:id', (req, res) => {
 	Board.findByIdAndRemove(req.params.id)
 		.then(board => res.json(board))
 		.catch(err => console.log(err))
 })
 
-///// routes for board images /////
-
-// get route for board image by id
+// getBoardImage
 router.get('/:board_id/images/:image_id', (req, res) => {
 	Board.findById(req.params.board_id)
 		.then(board => {
@@ -51,7 +55,7 @@ router.get('/:board_id/images/:image_id', (req, res) => {
 		.catch(err => console.log(err))
 })
 
-// post route for board images
+// pinImageToBoard
 router.post('/:id', (req, res) => {
 	Board.findById(req.params.id)
 		.then(board => {
@@ -64,7 +68,7 @@ router.post('/:id', (req, res) => {
 		.catch(err => console.log(err))
 })
 
-// delete route for board images
+// removeImageFromBoard
 router.delete('/:board_id/images/:image_id', (req, res) => {
 	Board.findById(req.params.board_id)
 		.then(board => {

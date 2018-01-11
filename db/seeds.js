@@ -48,20 +48,6 @@ const landscape = new Board({
 
 const boards = [photography, landscape]
 
-const user_1 = new User({
-	email: 'user1@gmail.com',
-	password: 'password',
-	boards: photography
-})
-
-const user_2 = new User({
-	email: 'user2@gmail.com',
-	password: 'password',
-	boards: landscape
-})
-
-const users = [user_1, user_2]
-
 Image.remove({})
 	.catch(err => console.log(err))
 	.then(() => {
@@ -87,13 +73,3 @@ Board.remove({})
 	})
 
 User.remove({})
-	.catch(err => console.log(err))
-	.then(() => {
-		console.log('users removed successfully')
-
-		users.forEach(user => {
-			user.save((err, user) => {
-				err ? console.log('error creating user') : console.log(user)
-			})
-		})
-	})
