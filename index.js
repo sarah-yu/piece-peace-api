@@ -5,6 +5,8 @@ const cors = require('cors')
 const jwt = require('jwt-simple')
 const passport = require('passport')
 const bcrypt = require('bcrypt')
+const formidable = require('formidable')
+const fs = require('fs')
 
 const auth = require('./auth')()
 const cfg = require('./config.js')
@@ -42,8 +44,9 @@ app.post('/api/login', function(req, res) {
 						let payload = {
 							id: user.id
 						}
+
 						let token = jwt.encode(payload, cfg.jwtSecret)
-						res.json({ token: token })
+						res.json({ token: token, username: req.body.username })
 					} else {
 						// incorrect password
 						console.log('incorrect password')
@@ -80,7 +83,7 @@ app.post('/api/register', function(req, res) {
 								if (user) {
 									let payload = { id: user.id }
 									let token = jwt.encode(payload, cfg.jwtSecret)
-									res.json({ token: token })
+									res.json({ token: token, username: req.body.username })
 								} else {
 									res.sendStatus(401)
 								}
