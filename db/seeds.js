@@ -88,7 +88,7 @@ const lol_images = [
 	{
 		src: 'https://s3.amazonaws.com/piece-peace/same-dwight.png',
 		origin: '',
-		description: 'same dwight'
+		description: 'same'
 	},
 	{
 		src: 'https://s3.amazonaws.com/piece-peace/same-mayor.jpg',
