@@ -120,24 +120,4 @@ router.put('/:board_id/images/:image_id', (req, res) => {
 		.catch(err => console.log(err))
 })
 
-// createBoardImage
-router.post('/:id/images', (req, res) => {
-	console.log('CREATE BOARD IMAGE')
-	console.log(req.body)
-
-	Board.findById(req.params.id)
-		.then(board => {
-			board.images.push(req.body)
-
-			board
-				.save()
-				.then(board => {
-					console.log(board)
-					res.json(board)
-				})
-				.catch(err => console.log(err))
-		})
-		.catch(err => console.log(err))
-})
-
 module.exports = router

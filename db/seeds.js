@@ -25,12 +25,6 @@ const photography_images = [
 		description: 'Untitled, from series Ametsuchi - Rinko Kawauchi'
 	},
 	{
-		src: 'https://s3.amazonaws.com/piece-peace/Love_of_This_Land-7-of-18.jpg',
-		origin:
-			'https://www.booooooom.com/2017/12/27/photographer-spotlight-alexis-hagestad/',
-		description: 'Love of This Land - Alexis Hagestad'
-	},
-	{
 		src: 'https://s3.amazonaws.com/piece-peace/photo-1.jpg',
 		origin: 'https://www.flickr.com/photos/28385655@N06/4424935670/',
 		description: 'Flask from the series Jenny World'
@@ -77,6 +71,11 @@ const lol_images = [
 		description: 'same'
 	},
 	{
+		src: 'https://s3.amazonaws.com/piece-peace/same-egg-offer.png',
+		origin: '',
+		description: 'same'
+	},
+	{
 		src: 'https://s3.amazonaws.com/piece-peace/same-cat.jpg',
 		origin: '',
 		description: 'same'
@@ -90,16 +89,6 @@ const lol_images = [
 		src: 'https://s3.amazonaws.com/piece-peace/same-dwight.png',
 		origin: '',
 		description: 'same dwight'
-	},
-	{
-		src: 'https://s3.amazonaws.com/piece-peace/same-egg-offer.png',
-		origin: '',
-		description: 'same'
-	},
-	{
-		src: 'https://s3.amazonaws.com/piece-peace/same-fred.jpg',
-		origin: '',
-		description: 'same'
 	},
 	{
 		src: 'https://s3.amazonaws.com/piece-peace/same-mayor.jpg',
