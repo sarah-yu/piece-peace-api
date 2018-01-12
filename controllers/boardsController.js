@@ -32,10 +32,6 @@ router.post('/', (req, res) => {
 
 // updateBoard
 router.put('/:id', (req, res) => {
-	console.log('**********')
-	console.log(req.body)
-	console.log('**********')
-
 	Board.findById(req.params.id)
 		.then(board => {
 			board.set(req.body)
